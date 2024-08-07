@@ -1,37 +1,33 @@
-export function renderImages(images) {
-    const gallery = document.querySelector('.gallery');
-    const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
-        return `
-            <a href="${largeImageURL}" class="gallery__link">
-                <div class="photo-card">
-                    <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-                    <div class="info">
-                        <p class="info-item">
-                            <b>Likes</b> ${likes}
-                        </p>
-                        <p class="info-item">
-                            <b>Views</b> ${views}
-                        </p>
-                        <p class="info-item">
-                            <b>Comments</b> ${comments}
-                        </p>
-                        <p class="info-item">
-                            <b>Downloads</b> ${downloads}
-                        </p>
-                    </div>
-                </div>
-            </a>
-        `;
-    }).join('');
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-    gallery.insertAdjacentHTML('beforeend', markup);
+export function createImages(data) {
+    const lightbox = new SimpleLightbox('.gallery-list a', {
+        captions: true,
+        captionsData: 'alt',
+        captionsDelay: 250
+    });
 
-    // Ініціалізація або оновлення SimpleLightbox
-    const lightbox = new SimpleLightbox('.gallery a');
+    const galleryList = document.querySelector('.gallery-list');
+
+    let images = data.hits.map((image) =>
+        `<div class="image-wrapper">
+    <a href="${image.largeImageURL}">
+    <img class="gallery-img" src="${image.webformatURL}" alt="${image.tags}"></img>
+    </a>
+    <div class="text-wrapper">
+    <div class="text-item"><h5 class="text-header">Likes</h5><p class="text-paragraph">${image.likes}</p></div>
+    <div class="text-item"><h5 class="text-header">Views</h5><p class="text-paragraph">${image.views}</p></div>
+    <div class="text-item"><h5 class="text-header">Comments</h5><p class="text-paragraph">${image.comments}</p></div>
+    <div class="text-item"><h5 class="text-header">Downloads</h5><p class="text-paragraph">${image.downloads}</p></div>
+    </div>
+    </div>`).join("");
+        
+    galleryList.insertAdjacentHTML('beforeend', images);
     lightbox.refresh();
 }
 
-export function clearGallery() {
-    const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = '';
+export function clearImages() {
+    const galleryList = document.querySelector('.gallery-list');
+    galleryList.innerHTML = "";
 }

@@ -8,13 +8,25 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <div id="loader" class="loader hidden"></div>
-    <form id="search-form">
-      <input type="text" name="searchQuery" placeholder="Search images..." required>
-      <button type="submit">Search</button>
-  </form>
-  <div class="gallery"></div>
-
-  <script type="module" src="./main.js"></script>
+    <section>
+      <div class="container-gallery">
+        <form class="form-gallery">
+          <label for="query-for-search">
+            <input
+              type="text"
+              class="form-gallery-input"
+              name="query-for-search"
+              id="query-for-search"
+              placeholder="Search-images..."
+              required
+            />
+          </label>
+          <button class="form-gallery-btn" type="submit">Search</button>
+        </form>
+        <span class="hidden loader"></span>
+        <ul class="gallery-list"></ul>
+      </div>
+    </section>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
